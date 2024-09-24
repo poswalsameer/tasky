@@ -1,9 +1,31 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { CheckCircle, Calendar, Users, BarChart, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Component() {
+
+  const { status } = useSession();
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    const response = await signIn('google', { redirect: false });
+    if (response?.ok) {
+      router.push('/tasks');
+    }
+  };
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push('/tasks');
+    }
+  }, [status, router]);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -24,7 +46,9 @@ export default function Component() {
                 
               </div>
               <div className="w-full max-w-sm space-y-2">
-                  <Button className=" h-10 w-32 rounded-sm bg-blue-600 hover:bg-blue-700">
+                  <Button className=" h-10 w-32 rounded-sm bg-blue-600 hover:bg-blue-700"
+                  onClick={handleLogin}
+                  >
                     Get Started
                   </Button>
               </div>
