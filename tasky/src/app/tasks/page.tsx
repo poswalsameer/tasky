@@ -118,11 +118,9 @@ export default function TaskManager() {
   }, [] )
 
   return (
-
-    
-      <div className="min-h-screen bg-gray-900 text-gray-100">
+      <div className="min-h-screen bg-gray-800 text-gray-100">
         {/* Navbar */}
-        <nav className="flex justify-between bg-gray-800 p-4">
+        <nav className="flex justify-between bg-gray-900 p-4">
 
             <div className="flex items-center justify-center">
               <CheckCircle className="h-6 w-6 text-blue-400" />
@@ -147,9 +145,9 @@ export default function TaskManager() {
         <main className="container mx-auto p-4">
           
           {/* Create task form */}
-          <Card className="mb-8 bg-gray-800">
+          <Card className="mb-8 bg-gray-900 border-none shadow-2xl">
             <CardHeader>
-              <CardTitle className="text-white font-medium text-xl">Create New Task</CardTitle>
+              <CardTitle className="text-white font-semibold text-xl">Create New Task</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCreateTask} className="space-y-4">
@@ -159,7 +157,7 @@ export default function TaskManager() {
                   placeholder="Task Title"
                   value={newTask.title}
                   onChange={handleInputChange}
-                  className="bg-gray-700 text-gray-100 border-gray-600"
+                  className="bg-gray-700 text-gray-100 border-none rounded-sm"
                   required
                 />
                 <Textarea
@@ -167,10 +165,10 @@ export default function TaskManager() {
                   placeholder="Task Description (optional)"
                   value={newTask.description}
                   onChange={handleInputChange}
-                  className="bg-gray-700 text-gray-100 border-gray-600"
+                  className="bg-gray-700 border-none text-gray-100 rounded-sm"
                 />
                 <Select name="status" value={newTask.status} onValueChange={(value) => handleSelectChange("status", value)}>
-                  <SelectTrigger className="bg-gray-700 text-gray-100 border-gray-600">
+                  <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -180,7 +178,7 @@ export default function TaskManager() {
                   </SelectContent>
                 </Select>
                 <Select name="priority" value={newTask.priority} onValueChange={(value) => handleSelectChange("priority", value)}>
-                  <SelectTrigger className="bg-gray-700 text-gray-100 border-gray-600">
+                  <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm">
                     <SelectValue placeholder="Priority" />
                   </SelectTrigger>
                   <SelectContent>
@@ -189,8 +187,8 @@ export default function TaskManager() {
                     <SelectItem value="High">High</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button type="submit" className="w-full">
-                  <Plus className="mr-2 h-4 w-4" />
+                <Button type="submit" className=" bg-white text-black bg-opacity-70 font-medium w-full rounded-sm transition-all ease-in delay-75 hover:cursor-pointer hover:bg-white hover:bg-opacity-60 ">
+                  <Plus className="mr-2 h-4 w-4 font-bold " />
                   Add Task
                 </Button>
               </form>
@@ -198,22 +196,22 @@ export default function TaskManager() {
           </Card>
 
           {/* Existing tasks */}
-          <Card className="bg-gray-800">
+          <Card className="bg-gray-900 border-none">
             <CardHeader>
-              <CardTitle>Your Tasks</CardTitle>
+              <CardTitle className="text-white font-semibold text-xl">Your Tasks</CardTitle>
             </CardHeader>
             <CardContent>
               {tasks.length > 0 ? (
                 <ul className="space-y-4">
                   {tasks.map((task) => (
-                    <li key={task.id} className="bg-gray-700 bg-opacity-40 p-4 rounded-md">
+                    <li key={task.id} className="bg-gray-700 bg-opacity-40 p-4 rounded-md transition-all ease-in delay-75 hover:cursor-pointer hover:-translate-y-1">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h3 className="text-white font-semibold text-xl">
+                          <h3 className="text-blue-400 font-medium text-xl">
                               {task.title}
                           </h3>
 
-                          {task.description && <p className="text-base text-gray-400 mt-1">{task.description}</p>}
+                          {task.description && <p className="text-sm text-blue-200 mt-1">{task.description}</p>}
 
                           <div className="flex gap-x-20 gap-y-4 mt-2">
                               <div className="text-sm text-white">
@@ -228,12 +226,12 @@ export default function TaskManager() {
                           <div className="flex flex-row gap-x-5">
                               <Button
                                   variant="destructive"
-                                  className="rounded-sm"
+                                  className="rounded-sm h-8 w-8"
                                   size="icon"
                                   onClick={() => handleDeleteTask(task.id)}
                                   aria-label={`Delete task: ${task.title}`}
                               >
-                                  <Trash2 className="h-4 w-4" />
+                                  <Trash2 className="h-3 w-3" />
                               </Button>
 
                               {/* <Button 
