@@ -118,191 +118,193 @@ export default function TaskManager() {
   }, [] )
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
-      {/* Navbar */}
-      <nav className="flex justify-between bg-gray-800 p-4">
 
-          <div className="flex items-center justify-center">
-            <CheckCircle className="h-6 w-6 text-blue-400" />
-            <span className="ml-2 text-2xl font-bold">Tasky</span>
+    
+      <div className="min-h-screen bg-gray-900 text-gray-100">
+        {/* Navbar */}
+        <nav className="flex justify-between bg-gray-800 p-4">
+
+            <div className="flex items-center justify-center">
+              <CheckCircle className="h-6 w-6 text-blue-400" />
+              <span className="ml-2 text-2xl font-bold">Tasky</span>
+            </div>
+
+          <div className="container mx-auto flex gap-x-4 justify-end">
+
+            <Button variant="secondary" className="rounded-sm font-semibold" onClick={routeToKanbanBoard}>
+              <ClipboardCheck className="mr-2 h-4 w-4" />
+              Board
+            </Button>
+
+            <Button variant="secondary" className="rounded-sm font-semibold" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
           </div>
+        </nav>
 
-        <div className="container mx-auto flex gap-x-4 justify-end">
-
-          <Button variant="secondary" className="rounded-sm font-semibold" onClick={routeToKanbanBoard}>
-            <ClipboardCheck className="mr-2 h-4 w-4" />
-            Board
-          </Button>
-
-          <Button variant="secondary" className="rounded-sm font-semibold" onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
-        </div>
-      </nav>
-
-      {/* Main content */}
-      <main className="container mx-auto p-4">
-        
-        {/* Create task form */}
-        <Card className="mb-8 bg-gray-800">
-          <CardHeader>
-            <CardTitle className="text-white font-medium text-xl">Create New Task</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleCreateTask} className="space-y-4">
-              <Input
-                type="text"
-                name="title"
-                placeholder="Task Title"
-                value={newTask.title}
-                onChange={handleInputChange}
-                className="bg-gray-700 text-gray-100 border-gray-600"
-                required
-              />
-              <Textarea
-                name="description"
-                placeholder="Task Description (optional)"
-                value={newTask.description}
-                onChange={handleInputChange}
-                className="bg-gray-700 text-gray-100 border-gray-600"
-              />
-              <Select name="status" value={newTask.status} onValueChange={(value) => handleSelectChange("status", value)}>
-                <SelectTrigger className="bg-gray-700 text-gray-100 border-gray-600">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="To Do">To Do</SelectItem>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select name="priority" value={newTask.priority} onValueChange={(value) => handleSelectChange("priority", value)}>
-                <SelectTrigger className="bg-gray-700 text-gray-100 border-gray-600">
-                  <SelectValue placeholder="Priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Low">Low</SelectItem>
-                  <SelectItem value="Medium">Medium</SelectItem>
-                  <SelectItem value="High">High</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button type="submit" className="w-full">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Task
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* Existing tasks */}
-        <Card className="bg-gray-800">
-          <CardHeader>
-            <CardTitle>Your Tasks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {tasks.length > 0 ? (
-              <ul className="space-y-4">
-                {tasks.map((task) => (
-                  <li key={task.id} className="bg-gray-700 bg-opacity-40 p-4 rounded-md">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-white font-semibold text-xl">
-                            {task.title}
-                        </h3>
-
-                        {task.description && <p className="text-base text-gray-400 mt-1">{task.description}</p>}
-
-                        <div className="flex gap-x-20 gap-y-4 mt-2">
-                            <div className="text-sm text-white">
-                                Status: <span className={`text-sm ${task.status === "In Progress" ? "text-yellow-500" : task.status === "To Do" ? "text-red-500" : "text-green-400"}`}>{task.status}</span>  
-                            </div>
-                            <div className="text-sm text-white">
-                                Priority: <span className={`text-sm ${task.priority === "Low" ? "text-yellow-500" : task.priority === "Medium" ? "text-red-300" : "text-red-400"}`}>{task.priority}</span>
-                            </div>
-                        </div>
-                      </div>
-
-                        <div className="flex flex-row gap-x-5">
-                            <Button
-                                variant="destructive"
-                                className="rounded-sm"
-                                size="icon"
-                                onClick={() => handleDeleteTask(task.id)}
-                                aria-label={`Delete task: ${task.title}`}
-                            >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
-
-                            {/* <Button 
-                                variant="secondary"
-                                size="icon"
-                                className="rounded-sm"
-                                onClick={updateTask}>
-                                <PencilIcon className="h-4 w-4"/>
-                            </Button> */}
-                        </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-400">No tasks yet. Create one above!</p>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="icon" onClick={() => editTask(task)}>
-                  <PencilIcon className="h-4 w-4" />
+        {/* Main content */}
+        <main className="container mx-auto p-4">
+          
+          {/* Create task form */}
+          <Card className="mb-8 bg-gray-800">
+            <CardHeader>
+              <CardTitle className="text-white font-medium text-xl">Create New Task</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleCreateTask} className="space-y-4">
+                <Input
+                  type="text"
+                  name="title"
+                  placeholder="Task Title"
+                  value={newTask.title}
+                  onChange={handleInputChange}
+                  className="bg-gray-700 text-gray-100 border-gray-600"
+                  required
+                />
+                <Textarea
+                  name="description"
+                  placeholder="Task Description (optional)"
+                  value={newTask.description}
+                  onChange={handleInputChange}
+                  className="bg-gray-700 text-gray-100 border-gray-600"
+                />
+                <Select name="status" value={newTask.status} onValueChange={(value) => handleSelectChange("status", value)}>
+                  <SelectTrigger className="bg-gray-700 text-gray-100 border-gray-600">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="To Do">To Do</SelectItem>
+                    <SelectItem value="In Progress">In Progress</SelectItem>
+                    <SelectItem value="Completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select name="priority" value={newTask.priority} onValueChange={(value) => handleSelectChange("priority", value)}>
+                  <SelectTrigger className="bg-gray-700 text-gray-100 border-gray-600">
+                    <SelectValue placeholder="Priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Low">Low</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="High">High</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button type="submit" className="w-full">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Task
                 </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Edit Task</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4 py-4">
-                  <Input
-                    placeholder="Task name"
-                    value={editingTask?.name || ""}
-                    onChange={(e) =>
-                      setEditingTask((prev) =>
-                        prev ? { ...prev, name: e.target.value } : null
-                      )
-                    }
-                  />
-                  <Textarea
-                    placeholder="Task description"
-                    value={editingTask?.description || ""}
-                    onChange={(e) =>
-                      setEditingTask((prev) =>
-                        prev ? { ...prev, description: e.target.value } : null
-                      )
-                    }
-                  />
-                  <Select
-                    value={editingTask?.priority || "medium"}
-                    onValueChange={(value: "low" | "medium" | "high") =>
-                      setEditingTask((prev) =>
-                        prev ? { ...prev, priority: value } : null
-                      )
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button onClick={updateTask}>Update Task</Button>
-                </div>
-              </DialogContent>
-            </Dialog> */}
-      </main>
-    </div>
+              </form>
+            </CardContent>
+          </Card>
+
+          {/* Existing tasks */}
+          <Card className="bg-gray-800">
+            <CardHeader>
+              <CardTitle>Your Tasks</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {tasks.length > 0 ? (
+                <ul className="space-y-4">
+                  {tasks.map((task) => (
+                    <li key={task.id} className="bg-gray-700 bg-opacity-40 p-4 rounded-md">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-white font-semibold text-xl">
+                              {task.title}
+                          </h3>
+
+                          {task.description && <p className="text-base text-gray-400 mt-1">{task.description}</p>}
+
+                          <div className="flex gap-x-20 gap-y-4 mt-2">
+                              <div className="text-sm text-white">
+                                  Status: <span className={`text-sm ${task.status === "In Progress" ? "text-yellow-500" : task.status === "To Do" ? "text-red-500" : "text-green-400"}`}>{task.status}</span>  
+                              </div>
+                              <div className="text-sm text-white">
+                                  Priority: <span className={`text-sm ${task.priority === "Low" ? "text-yellow-500" : task.priority === "Medium" ? "text-red-300" : "text-red-400"}`}>{task.priority}</span>
+                              </div>
+                          </div>
+                        </div>
+
+                          <div className="flex flex-row gap-x-5">
+                              <Button
+                                  variant="destructive"
+                                  className="rounded-sm"
+                                  size="icon"
+                                  onClick={() => handleDeleteTask(task.id)}
+                                  aria-label={`Delete task: ${task.title}`}
+                              >
+                                  <Trash2 className="h-4 w-4" />
+                              </Button>
+
+                              {/* <Button 
+                                  variant="secondary"
+                                  size="icon"
+                                  className="rounded-sm"
+                                  onClick={updateTask}>
+                                  <PencilIcon className="h-4 w-4"/>
+                              </Button> */}
+                          </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-400">No tasks yet. Create one above!</p>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="icon" onClick={() => editTask(task)}>
+                    <PencilIcon className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Edit Task</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <Input
+                      placeholder="Task name"
+                      value={editingTask?.name || ""}
+                      onChange={(e) =>
+                        setEditingTask((prev) =>
+                          prev ? { ...prev, name: e.target.value } : null
+                        )
+                      }
+                    />
+                    <Textarea
+                      placeholder="Task description"
+                      value={editingTask?.description || ""}
+                      onChange={(e) =>
+                        setEditingTask((prev) =>
+                          prev ? { ...prev, description: e.target.value } : null
+                        )
+                      }
+                    />
+                    <Select
+                      value={editingTask?.priority || "medium"}
+                      onValueChange={(value: "low" | "medium" | "high") =>
+                        setEditingTask((prev) =>
+                          prev ? { ...prev, priority: value } : null
+                        )
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Low</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Button onClick={updateTask}>Update Task</Button>
+                  </div>
+                </DialogContent>
+              </Dialog> */}
+        </main>
+      </div>
   )
 }
