@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOut, Plus, Trash2, PencilIcon } from "lucide-react";
+import { LogOut, Plus, Trash2, PencilIcon, ClipboardCheck, CheckCircle  } from "lucide-react";
 import { signOut } from 'next-auth/react';
 import {
     Dialog,
@@ -15,6 +15,7 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { useRouter } from "next/navigation"
 
 interface Task {
   id: number
@@ -31,6 +32,8 @@ const initialTasks: Task[] = [
 ]
 
 export default function TaskManager() {
+
+  const router = useRouter();
 
   const [tasks, setTasks] = useState<Task[]>([])
   const [newTask, setNewTask] = useState<Task>({
@@ -100,6 +103,10 @@ export default function TaskManager() {
     signOut({ callbackUrl: '/' });
   }
 
+  const routeToKanbanBoard = () => {
+    router.push('/kanban-board')
+  }
+
   useEffect( () => {
 
     // GETTING ALL THE CURRENT TASKS ON THE FIRST RENDER TO DISPLAY THEM ON THE WEBPAGE
@@ -113,9 +120,21 @@ export default function TaskManager() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       {/* Navbar */}
-      <nav className="bg-gray-800 p-4">
-        <div className="container mx-auto flex justify-end">
-          <Button variant="ghost" onClick={handleLogout}>
+      <nav className="flex justify-between bg-gray-800 p-4">
+
+          <div className="flex items-center justify-center">
+            <CheckCircle className="h-6 w-6 text-blue-400" />
+            <span className="ml-2 text-2xl font-bold">Tasky</span>
+          </div>
+
+        <div className="container mx-auto flex gap-x-4 justify-end">
+
+          <Button variant="secondary" className="rounded-sm font-semibold" onClick={routeToKanbanBoard}>
+            <ClipboardCheck className="mr-2 h-4 w-4" />
+            Board
+          </Button>
+
+          <Button variant="secondary" className="rounded-sm font-semibold" onClick={handleLogout}>
             <LogOut className="mr-2 h-4 w-4" />
             Logout
           </Button>
@@ -124,12 +143,11 @@ export default function TaskManager() {
 
       {/* Main content */}
       <main className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-6">Task Manager</h1>
-
+        
         {/* Create task form */}
         <Card className="mb-8 bg-gray-800">
           <CardHeader>
-            <CardTitle>Create New Task</CardTitle>
+            <CardTitle className="text-white font-medium text-xl">Create New Task</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleCreateTask} className="space-y-4">
