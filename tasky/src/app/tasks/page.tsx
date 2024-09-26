@@ -8,13 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogOut, Plus, Trash2, PencilIcon, ClipboardCheck, CheckCircle  } from "lucide-react";
 import { signOut } from "next-auth/react";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
 import { useRouter } from "next/navigation"
 
 
@@ -25,12 +18,6 @@ interface Task {
   status: "To Do" | "In Progress" | "Completed"
   priority: "Low" | "Medium" | "High"
 }
-
-const initialTasks: Task[] = [
-  { id: 1, title: "Complete project proposal", description: "Draft and review the Q3 project proposal", status: "In Progress", priority: "High" },
-  { id: 2, title: "Review team's progress", description: "Check in with team members on their weekly goals", status: "To Do", priority: "Medium" },
-  { id: 3, title: "Prepare for client meeting", description: "Gather materials and talking points for the upcoming client presentation", status: "To Do", priority: "High" },
-]
 
 export default function TaskManager() {
 
@@ -85,21 +72,6 @@ export default function TaskManager() {
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   }
 
-//   const editTask = (task: Task) => {
-//     setEditingTask(task)
-//   }
-
-//   const updateTask = () => {
-//     if (editingTask) {
-//       setTasks(
-//         tasks.map((task) =>
-//           task.id === editingTask.id ? { ...task, ...editingTask } : task
-//         )
-//       )
-//       setEditingTask(null)
-//     }
-//     }
-
   const handleLogout = () => {
     signOut({ callbackUrl: '/' });
   }
@@ -130,7 +102,8 @@ export default function TaskManager() {
 
           <div className="container mx-auto flex gap-x-4 justify-end">
 
-            <Button variant="secondary" className="rounded-sm font-semibold" onClick={routeToKanbanBoard}>
+            <Button variant="secondary" 
+            className="rounded-sm font-semibold" onClick={routeToKanbanBoard}>
               <ClipboardCheck className="mr-2 h-4 w-4" />
               Board
             </Button>
@@ -188,7 +161,7 @@ export default function TaskManager() {
                     <SelectItem value="High">High</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button type="submit" className=" bg-white text-black bg-opacity-70 font-medium w-full rounded-sm transition-all ease-in delay-75 hover:cursor-pointer hover:bg-white hover:bg-opacity-60 ">
+                <Button type="submit" className="w-full text-black bg-gray-400 hover:text-white">
                   <Plus className="mr-2 h-4 w-4 font-bold " />
                   Add Task
                 </Button>

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-// import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,11 +39,6 @@ interface Task {
   priority: "Low" | "Medium" | "High";
 }
 
-const columns: { title: Task["status"]; color: string }[] = [
-  { title: "To Do", color: "bg-blue-600" },
-  { title: "In Progress", color: "bg-yellow-600" },
-  { title: "Completed", color: "bg-green-600" },
-];
 
 const priorityColors: Record<Task["priority"], string> = {
   Low: "bg-green-500",
@@ -53,11 +47,8 @@ const priorityColors: Record<Task["priority"], string> = {
 };
 
 function Page() {
-  const router = useRouter();
 
-  // const [todoTaskList, setToDoTaskList] = useState<Task[]>([]);
-  // const [inProgressTaskList, setInProgressTaskList] = useState<Task[]>([]);
-  // const [completedTaskList, setCompletedTaskList] = useState<Task[]>([]);
+  const router = useRouter();
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<Task>({
@@ -110,8 +101,6 @@ function Page() {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-
-    // setTasks(tasks.filter(task => task.id !== taskId))
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -154,11 +143,6 @@ function Page() {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
   }
-
-  // const groupedTasks = columns.reduce((acc, column) => {
-  //   acc[column.title] = tasks.filter((task) => task.status === column.title);
-  //   return acc;
-  // }, {} as Record<Task["status"], Task[]>);
 
   useEffect(() => {
     // GETTING ALL THE CURRENT TASKS ON THE FIRST RENDER TO DISPLAY THEM ON THE WEBPAGE
@@ -208,30 +192,6 @@ function Page() {
           )}
         </Draggable>
 
-        // <Card key={task.id} className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md">
-        //   <div className="flex justify-between items-start mb-2">
-        //     <h3 className="text-lg font-medium text-blue-400">{task.title}</h3>
-        //     <div className="flex items-center space-x-2">
-        //       <Badge
-        //         className={`${priorityColors[task.priority]} hover:${
-        //           priorityColors[task.priority]
-        //         } rounded font-semibold text-xs text-black`}
-        //       >
-        //         {task.priority}
-        //       </Badge>
-        //       <Button
-        //         variant="ghost"
-        //         size="icon"
-        //         onClick={() => handleDeleteTask(task.id)}
-        //         className="h-8 w-8 text-blue-400 hover:bg-black hover:text-blue-400"
-        //       >
-        //         <Trash2 className="h-4 w-4" />
-        //         <span className="sr-only">Delete task</span>
-        //       </Button>
-        //     </div>
-        //   </div>
-        //   <p className="text-xs text-blue-200">{task.description}</p>
-        // </Card>
       ));
   };
 
