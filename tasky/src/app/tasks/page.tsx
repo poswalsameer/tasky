@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogOut, Plus, Trash2, PencilIcon, ClipboardCheck, CheckCircle  } from "lucide-react";
-import { signOut } from 'next-auth/react';
+import { signOut } from "next-auth/react";
 import {
     Dialog,
     DialogContent,
@@ -16,6 +16,7 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { useRouter } from "next/navigation"
+
 
 interface Task {
   id: number

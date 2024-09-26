@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+// import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +25,12 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-// import { DragDropContext, Droppable, Draggable, DropResult} from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 
 interface Task {
   id: number;
@@ -65,7 +71,7 @@ function Page() {
   const handleCreateTask = (e: React.FormEvent) => {
     e.preventDefault();
     if (newTask.title.trim()) {
-      const updatedTasks = [...tasks, { ...newTask, id: tasks.length + 1 }];
+      const updatedTasks = [...tasks, { ...newTask, id: Date.now() }];
 
       // saving the updated task list in our state
       setTasks(updatedTasks);
@@ -108,23 +114,51 @@ function Page() {
     // setTasks(tasks.filter(task => task.id !== taskId))
   };
 
-  // const onDragEnd = (result: DropResult) => {
-  //     const { destination, source, draggableId } = result
+  const onDragEnd = (result: DropResult) => {
+    
+    const { destination, source, draggableId } = result;
+    // If the task is dropped outside a droppable area, do nothing
+    if (!destination) return;
+    // If the task is dropped in the same place, do nothing
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
 
-  //     if (!destination) return
+    const draggedTask = tasks.find((task) => task.id.toString() === draggableId);
 
-  //     const newTasks = Array.from(tasks)
-  //     const [reorderedItem] = newTasks.splice(source.index, 1)
-  //     reorderedItem.status = destination.droppableId as Task["status"]
-  //     newTasks.splice(destination.index, 0, reorderedItem)
+    if (!draggedTask) return; // Safety check
 
-  //     setTasks(newTasks)
-  // }
+    // Update the task's status based on the destination column
+    let updatedTasks = [...tasks];
+    const updatedTask = { ...draggedTask };
 
-  const groupedTasks = columns.reduce((acc, column) => {
-    acc[column.title] = tasks.filter((task) => task.status === column.title);
-    return acc;
-  }, {} as Record<Task["status"], Task[]>);
+    if (destination.droppableId === "toDoTasks") {
+      updatedTask.status = "To Do";
+    } else if (destination.droppableId === "inProgressTasks") {
+      updatedTask.status = "In Progress";
+    } else if (destination.droppableId === "completedTasks") {
+      updatedTask.status = "Completed";
+    }
+
+    // Remove the task from its current position and insert it in the new position
+    updatedTasks = updatedTasks.filter((task) => task.id !== draggedTask.id);
+    updatedTasks.splice(destination.index, 0, updatedTask);
+
+    // Save the updated tasks list
+    setTasks(updatedTasks);
+
+    // Also update the local storage if needed
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
+  }
+
+  // const groupedTasks = columns.reduce((acc, column) => {
+  //   acc[column.title] = tasks.filter((task) => task.status === column.title);
+  //   return acc;
+  // }, {} as Record<Task["status"], Task[]>);
 
   useEffect(() => {
     // GETTING ALL THE CURRENT TASKS ON THE FIRST RENDER TO DISPLAY THEM ON THE WEBPAGE
@@ -137,31 +171,67 @@ function Page() {
   const renderTasks = (status: Task["status"]) => {
     return tasks
       .filter((task) => task.status === status)
-      .map((task) => (
-        <Card key={task.id} className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-medium text-blue-400">{task.title}</h3>
-            <div className="flex items-center space-x-2">
-              <Badge
-                className={`${priorityColors[task.priority]} hover:${
-                  priorityColors[task.priority]
-                } rounded font-semibold text-xs text-black`}
-              >
-                {task.priority}
-              </Badge>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleDeleteTask(task.id)}
-                className="h-8 w-8 text-blue-400 hover:bg-black hover:text-blue-400"
-              >
-                <Trash2 className="h-4 w-4" />
-                <span className="sr-only">Delete task</span>
-              </Button>
-            </div>
-          </div>
-          <p className="text-xs text-blue-200">{task.description}</p>
-        </Card>
+      .map((task,index) => (
+        <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+          {(provided) => (
+            <Card
+              className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md"
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-lg font-medium text-blue-400">
+                  {task.title}
+                </h3>
+                <div className="flex items-center space-x-2">
+                  <Badge
+                    className={`${priorityColors[task.priority]} hover:${
+                      priorityColors[task.priority]
+                    } rounded font-semibold text-xs text-black`}
+                  >
+                    {task.priority}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDeleteTask(task.id)}
+                    className="h-8 w-8 text-blue-400 hover:bg-black hover:text-blue-400"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    <span className="sr-only">Delete task</span>
+                  </Button>
+                </div>
+              </div>
+              <p className="text-xs text-blue-200">{task.description}</p>
+            </Card>
+          )}
+        </Draggable>
+
+        // <Card key={task.id} className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md">
+        //   <div className="flex justify-between items-start mb-2">
+        //     <h3 className="text-lg font-medium text-blue-400">{task.title}</h3>
+        //     <div className="flex items-center space-x-2">
+        //       <Badge
+        //         className={`${priorityColors[task.priority]} hover:${
+        //           priorityColors[task.priority]
+        //         } rounded font-semibold text-xs text-black`}
+        //       >
+        //         {task.priority}
+        //       </Badge>
+        //       <Button
+        //         variant="ghost"
+        //         size="icon"
+        //         onClick={() => handleDeleteTask(task.id)}
+        //         className="h-8 w-8 text-blue-400 hover:bg-black hover:text-blue-400"
+        //       >
+        //         <Trash2 className="h-4 w-4" />
+        //         <span className="sr-only">Delete task</span>
+        //       </Button>
+        //     </div>
+        //   </div>
+        //   <p className="text-xs text-blue-200">{task.description}</p>
+        // </Card>
       ));
   };
 
@@ -257,59 +327,87 @@ function Page() {
         </Card>
 
         {/* Actual Kanban board */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* TO DO TASKS */}
+            <Droppable droppableId="toDoTasks">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <h2 className="text-xl font-bold mb-4">To Do</h2>
+                  {renderTasks("To Do")}
+                  {provided.placeholder}
+                </div>
+              )}
+              {/* <div>
+                    <h2 className="text-xl font-bold mb-4">To Do</h2>
+                    {renderTasks("To Do")}
+                </div> */}
+            </Droppable>
 
-             {/* TO DO TASKS */}
-            <div>
-                <h2 className="text-xl font-bold mb-4">To Do</h2>
-                {renderTasks("To Do")}
-            </div>
-            
             {/* IN PROGRESS TASKS */}
-            <div>
-                <h2 className="text-xl font-bold mb-4">In Progress</h2>
-                {renderTasks("In Progress")}
-            </div>
+            <Droppable droppableId="inProgressTasks">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <h2 className="text-xl font-bold mb-4">In Progress</h2>
+                  {renderTasks("In Progress")}
+                  {provided.placeholder}
+                </div>
+              )}
+              {/* <div>
+                    <h2 className="text-xl font-bold mb-4">In Progress</h2>
+                    {renderTasks("In Progress")}
+                </div> */}
+            </Droppable>
 
             {/* COMPLETED TASKS */}
-            <div>
-                <h2 className="text-xl font-bold mb-4">Completed</h2>
-                {renderTasks("Completed")}
-            </div>
+            <Droppable droppableId="completedTasks">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <h2 className="text-xl font-bold mb-4">Completed</h2>
+                  {renderTasks("Completed")}
+                  {provided.placeholder}
+                </div>
+              )}
+              {/* <div>
+                  <h2 className="text-xl font-bold mb-4">Completed</h2>
+                  {renderTasks("Completed")}
+              </div> */}
+            </Droppable>
 
-          {/* {columns.map((column) => (
-                    <div key={column.title} className="bg-gray-800 rounded-lg p-4">
-                        <h2 className="text-xl font-semibold mb-4 text-blue-300 flex items-center">
-                        <span className={`w-4 h-4 rounded-full mr-2 ${column.color}`}></span>
-                        {column.title}
-                        </h2>
-                        <div className="space-y-4">
-                        {groupedTasks[column.title].map((task) => (
-                            <Card key={task.id} className="bg-gray-700 p-4 rounded-lg shadow-md">
-                            <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-lg font-medium text-blue-200">{task.title}</h3>
-                                <div className="flex items-center space-x-2">
-                                <Badge className={`${priorityColors[task.priority]} hover:${priorityColors[task.priority]} rounded-sm font-semibold text-xs text-black`}>
-                                    {task.priority}
-                                </Badge>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => handleDeleteTask(task.id)}
-                                    className="h-8 w-8 text-gray-400 hover:text-red-400"
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                    <span className="sr-only">Delete task</span>
-                                </Button>
-                                </div>
-                            </div>
-                            <p className="text-sm text-gray-400">{task.description}</p>
-                            </Card>
-                        ))}
-                        </div>
-                    </div>
-                    ))} */}
-        </div>
+            {/* {columns.map((column) => (
+                      <div key={column.title} className="bg-gray-800 rounded-lg p-4">
+                          <h2 className="text-xl font-semibold mb-4 text-blue-300 flex items-center">
+                          <span className={`w-4 h-4 rounded-full mr-2 ${column.color}`}></span>
+                          {column.title}
+                          </h2>
+                          <div className="space-y-4">
+                          {groupedTasks[column.title].map((task) => (
+                              <Card key={task.id} className="bg-gray-700 p-4 rounded-lg shadow-md">
+                              <div className="flex justify-between items-start mb-2">
+                                  <h3 className="text-lg font-medium text-blue-200">{task.title}</h3>
+                                  <div className="flex items-center space-x-2">
+                                  <Badge className={`${priorityColors[task.priority]} hover:${priorityColors[task.priority]} rounded-sm font-semibold text-xs text-black`}>
+                                      {task.priority}
+                                  </Badge>
+                                  <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => handleDeleteTask(task.id)}
+                                      className="h-8 w-8 text-gray-400 hover:text-red-400"
+                                  >
+                                      <Trash2 className="h-4 w-4" />
+                                      <span className="sr-only">Delete task</span>
+                                  </Button>
+                                  </div>
+                              </div>
+                              <p className="text-sm text-gray-400">{task.description}</p>
+                              </Card>
+                          ))}
+                          </div>
+                      </div>
+                      ))} */}
+          </div>
+        </DragDropContext>
       </main>
     </div>
   );
