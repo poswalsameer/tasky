@@ -159,7 +159,7 @@ function Page() {
         <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
           {(provided) => (
             <Card
-              className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md"
+              className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md transition-all ease-in delay-75 hover:-translate-y-1"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -206,20 +206,19 @@ function Page() {
         <div className="container mx-auto flex gap-x-4 justify-end">
           <Button
             variant="secondary"
-            className="rounded-sm font-semibold"
+            className="rounded-sm text-xs font-bold"
             onClick={routeToTaskPage}
           >
             <ClipboardCheck className="mr-2 h-4 w-4" />
-            Board
+            List
           </Button>
 
           <Button
-            variant="secondary"
+            variant="destructive"
             className="rounded-sm font-semibold"
             onClick={handleLogout}
           >
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
+            <LogOut className=" h-4 w-4" />
           </Button>
         </div>
       </nav>
@@ -228,7 +227,7 @@ function Page() {
         {/* Create task component */}
         <Card className="mb-8 bg-gray-800 border-none shadow-2xl">
           <CardHeader>
-            <CardTitle className="text-white font-medium text-xl">
+            <CardTitle className="text-white font-bold text-2xl">
               Create New Task
             </CardTitle>
           </CardHeader>
@@ -240,7 +239,7 @@ function Page() {
                 placeholder="Task Title"
                 value={newTask.title}
                 onChange={handleInputChange}
-                className="bg-gray-700 text-gray-100 border-none rounded-sm "
+                className="bg-gray-700 text-gray-100 border-none rounded-sm transition-all ease-out delay-75 focus:bg-gray-900 "
                 required
               />
               <Textarea
@@ -248,14 +247,14 @@ function Page() {
                 placeholder="Task Description (optional)"
                 value={newTask.description}
                 onChange={handleInputChange}
-                className="bg-gray-700 text-gray-100 border-none rounded-sm"
+                className="bg-gray-700 text-gray-100 border-none rounded-sm transition-all ease-out delay-75 focus:bg-gray-900"
               />
               <Select
                 name="status"
                 value={newTask.status}
                 onValueChange={(value) => handleSelectChange("status", value)}
               >
-                <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm">
+                <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm focus:bg-gray-900">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -269,7 +268,7 @@ function Page() {
                 value={newTask.priority}
                 onValueChange={(value) => handleSelectChange("priority", value)}
               >
-                <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm">
+                <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm focus:bg-gray-900">
                   <SelectValue placeholder="Priority" />
                 </SelectTrigger>
                 <SelectContent>
@@ -298,10 +297,6 @@ function Page() {
                   {provided.placeholder}
                 </div>
               )}
-              {/* <div>
-                    <h2 className="text-xl font-bold mb-4">To Do</h2>
-                    {renderTasks("To Do")}
-                </div> */}
             </Droppable>
 
             {/* IN PROGRESS TASKS */}
@@ -313,10 +308,6 @@ function Page() {
                   {provided.placeholder}
                 </div>
               )}
-              {/* <div>
-                    <h2 className="text-xl font-bold mb-4">In Progress</h2>
-                    {renderTasks("In Progress")}
-                </div> */}
             </Droppable>
 
             {/* COMPLETED TASKS */}
@@ -328,44 +319,8 @@ function Page() {
                   {provided.placeholder}
                 </div>
               )}
-              {/* <div>
-                  <h2 className="text-xl font-bold mb-4">Completed</h2>
-                  {renderTasks("Completed")}
-              </div> */}
             </Droppable>
 
-            {/* {columns.map((column) => (
-                      <div key={column.title} className="bg-gray-800 rounded-lg p-4">
-                          <h2 className="text-xl font-semibold mb-4 text-blue-300 flex items-center">
-                          <span className={`w-4 h-4 rounded-full mr-2 ${column.color}`}></span>
-                          {column.title}
-                          </h2>
-                          <div className="space-y-4">
-                          {groupedTasks[column.title].map((task) => (
-                              <Card key={task.id} className="bg-gray-700 p-4 rounded-lg shadow-md">
-                              <div className="flex justify-between items-start mb-2">
-                                  <h3 className="text-lg font-medium text-blue-200">{task.title}</h3>
-                                  <div className="flex items-center space-x-2">
-                                  <Badge className={`${priorityColors[task.priority]} hover:${priorityColors[task.priority]} rounded-sm font-semibold text-xs text-black`}>
-                                      {task.priority}
-                                  </Badge>
-                                  <Button
-                                      variant="ghost"
-                                      size="icon"
-                                      onClick={() => handleDeleteTask(task.id)}
-                                      className="h-8 w-8 text-gray-400 hover:text-red-400"
-                                  >
-                                      <Trash2 className="h-4 w-4" />
-                                      <span className="sr-only">Delete task</span>
-                                  </Button>
-                                  </div>
-                              </div>
-                              <p className="text-sm text-gray-400">{task.description}</p>
-                              </Card>
-                          ))}
-                          </div>
-                      </div>
-                      ))} */}
           </div>
         </DragDropContext>
       </main>

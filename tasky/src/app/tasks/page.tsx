@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOut, Plus, Trash2, PencilIcon, ClipboardCheck, CheckCircle  } from "lucide-react";
+import { LogOut, Plus, Trash2, PencilIcon, ClipboardCheck, CheckCircle, Columns3  } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation"
 
@@ -103,14 +103,15 @@ export default function TaskManager() {
           <div className="container mx-auto flex gap-x-4 justify-end">
 
             <Button variant="secondary" 
-            className="rounded-sm font-semibold" onClick={routeToKanbanBoard}>
-              <ClipboardCheck className="mr-2 h-4 w-4" />
+            className="rounded-sm text-xs font-bold" onClick={routeToKanbanBoard}>
+              <Columns3 className="mr-2 h-4 w-4" />
               Board
             </Button>
 
-            <Button variant="secondary" className="rounded-sm font-semibold" onClick={handleLogout}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
+            <Button 
+              variant="destructive" 
+              className="rounded-sm font-semibold" onClick={handleLogout}>
+              <LogOut className="h-4 w-4" />
             </Button>
           </div>
         </nav>
@@ -121,7 +122,7 @@ export default function TaskManager() {
           {/* Create task form */}
           <Card className="mb-8 bg-gray-900 border-none shadow-2xl">
             <CardHeader>
-              <CardTitle className="text-white font-semibold text-xl">Create New Task</CardTitle>
+              <CardTitle className="text-white font-bold text-2xl">Create New Task</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCreateTask} className="space-y-4">
@@ -131,7 +132,7 @@ export default function TaskManager() {
                   placeholder="Task Title"
                   value={newTask.title}
                   onChange={handleInputChange}
-                  className="bg-gray-700 text-gray-100 border-none rounded-sm"
+                  className="bg-gray-700 text-gray-100 border-none rounded-sm transition-all ease-out delay-75 focus:bg-gray-950"
                   required
                 />
                 <Textarea
@@ -139,10 +140,10 @@ export default function TaskManager() {
                   placeholder="Task Description (optional)"
                   value={newTask.description}
                   onChange={handleInputChange}
-                  className="bg-gray-700 border-none text-gray-100 rounded-sm"
+                  className="bg-gray-700 border-none text-gray-100 rounded-sm transition-all ease-out delay-75 focus:bg-gray-950"
                 />
                 <Select name="status" value={newTask.status} onValueChange={(value) => handleSelectChange("status", value)}>
-                  <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm">
+                  <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm focus:bg-gray-950">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -152,7 +153,7 @@ export default function TaskManager() {
                   </SelectContent>
                 </Select>
                 <Select name="priority" value={newTask.priority} onValueChange={(value) => handleSelectChange("priority", value)}>
-                  <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm">
+                  <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm focus:bg-gray-950">
                     <SelectValue placeholder="Priority" />
                   </SelectTrigger>
                   <SelectContent>
@@ -161,7 +162,9 @@ export default function TaskManager() {
                     <SelectItem value="High">High</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button type="submit" className="w-full text-black bg-gray-400 hover:text-white">
+                <Button 
+                  type="submit" 
+                  className="w-full text-black bg-gray-400 transition-all ease-in delay-75 hover:text-white">
                   <Plus className="mr-2 h-4 w-4 font-bold " />
                   Add Task
                 </Button>
@@ -199,22 +202,15 @@ export default function TaskManager() {
 
                           <div className="flex flex-row gap-x-5">
                               <Button
-                                  variant="destructive"
-                                  className="rounded-sm h-8 w-8"
+                                  variant="ghost"
                                   size="icon"
+                                  className="h-8 w-8 text-blue-400 hover:bg-black hover:text-blue-400"
                                   onClick={() => handleDeleteTask(task.id)}
                                   aria-label={`Delete task: ${task.title}`}
                               >
-                                  <Trash2 className="h-3 w-3" />
+                                  <Trash2 className="h-4 w-4" />
                               </Button>
 
-                              {/* <Button 
-                                  variant="secondary"
-                                  size="icon"
-                                  className="rounded-sm"
-                                  onClick={updateTask}>
-                                  <PencilIcon className="h-4 w-4"/>
-                              </Button> */}
                           </div>
                       </div>
                     </li>
@@ -226,56 +222,6 @@ export default function TaskManager() {
             </CardContent>
           </Card>
 
-          {/* <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="icon" onClick={() => editTask(task)}>
-                    <PencilIcon className="h-4 w-4" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Edit Task</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4 py-4">
-                    <Input
-                      placeholder="Task name"
-                      value={editingTask?.name || ""}
-                      onChange={(e) =>
-                        setEditingTask((prev) =>
-                          prev ? { ...prev, name: e.target.value } : null
-                        )
-                      }
-                    />
-                    <Textarea
-                      placeholder="Task description"
-                      value={editingTask?.description || ""}
-                      onChange={(e) =>
-                        setEditingTask((prev) =>
-                          prev ? { ...prev, description: e.target.value } : null
-                        )
-                      }
-                    />
-                    <Select
-                      value={editingTask?.priority || "medium"}
-                      onValueChange={(value: "low" | "medium" | "high") =>
-                        setEditingTask((prev) =>
-                          prev ? { ...prev, priority: value } : null
-                        )
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select priority" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="low">Low</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="high">High</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Button onClick={updateTask}>Update Task</Button>
-                  </div>
-                </DialogContent>
-              </Dialog> */}
         </main>
       </div>
   )
