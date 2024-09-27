@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOut, Plus, Trash2, PencilIcon, ClipboardCheck, CheckCircle, Columns3  } from "lucide-react";
+import { LogOut, Plus, Trash2, CheckCircle, Columns3  } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation"
 
@@ -31,7 +31,6 @@ export default function TaskManager() {
     status: "To Do",
     priority: "Medium"
   })
-  const [editingTask, setEditingTask] = useState<Task | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value })

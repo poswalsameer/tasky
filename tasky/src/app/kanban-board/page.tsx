@@ -18,7 +18,6 @@ import {
   LogOut,
   Plus,
   Trash2,
-  PencilIcon,
   ClipboardCheck,
   CheckCircle,
 } from "lucide-react";

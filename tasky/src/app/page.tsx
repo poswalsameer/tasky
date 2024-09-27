@@ -1,8 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { CheckCircle, Calendar, Users, BarChart, ArrowRight } from "lucide-react"
+import { CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
