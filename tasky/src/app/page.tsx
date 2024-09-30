@@ -1,40 +1,70 @@
-'use client'
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { CheckCircle } from "lucide-react"
-import Link from "next/link"
-import { signIn, useSession } from 'next-auth/react';
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
+import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Component() {
-
   const { status } = useSession();
   const router = useRouter();
 
   const handleLogin = async () => {
-    const response = await signIn('google', { redirect: false });
+    const response = await signIn("google", { redirect: false });
     if (response?.ok) {
-      router.push('/tasks');
+      router.push("/tasks");
     }
   };
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push('/tasks');
+      router.push("/tasks");
     }
   }, [status, router]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
+    <div className="flex flex-col gap-y-5 justify-center items-center min-h-screen text-gray-100">
+
+      {/* NAME - Trackr */}
+      <div className="pl-10 flex justify-center items-center gap-x-6">
+        <CheckCircle className="h-32 w-32 text-black" />
+        <h1  
+          className="text-9xl font-semibold"
+          id="headingName"
+        >
+          Trackr.
+        </h1>
+      </div>
+
+      <div
+        className="text-5xl text-purple-950 font-semibold "
+        id="extraTextId"
+        >
+        Fuel your focus
+      </div>
+
+      <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-all hover:border-2 hover:border-slate-400"
+      onClick={handleLogin}
+      >
+        Get started
+      </button>
+
+      {/* <Button
+        className=" h-10 w-32 rounded-sm bg-black text-white"
+        onClick={handleLogin}
+      >
+        Get Started
+      </Button> */}
+      {/* <header className="px-4 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <CheckCircle className="h-6 w-6 text-blue-400" />
           <span className="ml-2 text-2xl font-bold">Tasky</span>
         </Link>
         
-      </header>
-      <main className="flex-1">
+      </header> */}
+      {/* <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-9 text-center">
@@ -67,7 +97,7 @@ export default function Component() {
             Privacy
           </Link>
         </nav>
-      </footer>
+      </footer> */}
     </div>
-  )
+  );
 }
