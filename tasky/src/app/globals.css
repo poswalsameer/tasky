@@ -14,6 +14,10 @@ body {
   background: linear-gradient(to bottom right, #6928da, #861ae4, #d318e8);
 }
 
+#kanbanBoardPage{
+  background: linear-gradient(to bottom, #6928da, #861ae4, #a13cf9);
+}
+
 #headingName{
   font-family: Monaco, sans-serif;
   background-image: linear-gradient(to right, #d4d4d4, #e9e9e9); 

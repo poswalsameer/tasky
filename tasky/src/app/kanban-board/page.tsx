@@ -29,6 +29,16 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 interface Task {
   id: number;
@@ -40,9 +50,9 @@ interface Task {
 
 
 const priorityColors: Record<Task["priority"], string> = {
-  Low: "bg-green-500",
-  Medium: "bg-yellow-500",
-  High: "bg-red-500",
+  Low: "bg-green-500 border border-green-700 hover:bg-green-500 hover:border hover:border-green-700",
+  Medium: "border border-yellow-600 bg-yellow-400 hover:border hover:border-yellow-600 hover:bg-yellow-400",
+  High: "border-red-700 bg-red-500 hover:bg-red-500 hover:border hover:border-red-700",
 };
 
 function Page() {
@@ -158,7 +168,7 @@ function Page() {
         <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
           {(provided) => (
             <Card
-              className="bg-gray-700 bg-opacity-40 border-none my-5 p-4 rounded-md shadow-md transition-all ease-in delay-75 hover:-translate-y-1"
+              className="bg-[#3B235F] bg-opacity-60 border-none my-5 p-4 rounded-md shadow-md transition-all ease-in delay-75 hover:-translate-y-1"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -195,12 +205,113 @@ function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
-      <nav className="flex justify-between bg-gray-800 p-4">
-        <div className="flex items-center justify-center">
+    <div className="min-h-screen bg-gray-900 text-gray-100"
+    id="kanbanBoardPage"
+    >
+      <nav className="flex justify-between bg-[#3B235F] p-4">
+        {/* <div className="flex items-center justify-center">
           <CheckCircle className="h-6 w-6 text-blue-400" />
           <span className="ml-2 text-2xl font-bold">Tasky</span>
-        </div>
+        </div> */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="secondary" className="text-[#3B235F] text-xs font-semibold">
+              Create New Task
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+
+            <DialogHeader>
+              <DialogTitle>Create New Task</DialogTitle>
+            </DialogHeader>
+
+            <form onSubmit={handleCreateTask} className="space-y-4">
+              <div className="grid gap-4 py-4">
+                
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Title
+                    </Label>
+                    <Input
+                      type="text"
+                      name="title"
+                      placeholder="Task Title"
+                      value={newTask.title}
+                      onChange={handleInputChange}
+                      className="w-64 rounded-sm transition-all ease-out delay-75"
+                      required
+                    />
+                  </div>
+
+                  
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                      Description
+                    </Label>
+                    <Textarea
+                      name="description"
+                      placeholder="Task Description (optional)"
+                      value={newTask.description}
+                      onChange={handleInputChange}
+                      className="w-64 rounded-sm transition-all ease-out delay-75 "
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                      Status
+                    </Label>
+                    <Select
+                      name="status"
+                      value={newTask.status}
+                      onValueChange={(value) =>
+                        handleSelectChange("status", value)
+                      }
+                    >
+                      <SelectTrigger className="w-64 rounded-sm">
+                        <SelectValue placeholder="Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="To Do">To Do</SelectItem>
+                        <SelectItem value="In Progress">In Progress</SelectItem>
+                        <SelectItem value="Completed">Completed</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                      Priority
+                    </Label>
+                    <Select
+                      name="priority"
+                      value={newTask.priority}
+                      onValueChange={(value) =>
+                        handleSelectChange("priority", value)
+                      }
+                    >
+                      <SelectTrigger className="w-64 rounded-sm">
+                        <SelectValue placeholder="Priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Low">Low</SelectItem>
+                        <SelectItem value="Medium">Medium</SelectItem>
+                        <SelectItem value="High">High</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+              </div>
+
+              <DialogFooter>
+                <Button type="submit">Create</Button>
+              </DialogFooter>
+
+            </form>
+
+          </DialogContent>
+        </Dialog>
 
         <div className="container mx-auto flex gap-x-4 justify-end">
           <Button
@@ -222,68 +333,9 @@ function Page() {
         </div>
       </nav>
 
-      <main className="container mx-auto p-4">
+      <main className="container mt-10 mx-auto p-4">
         {/* Create task component */}
-        <Card className="mb-8 bg-gray-800 border-none shadow-2xl">
-          <CardHeader>
-            <CardTitle className="text-white font-bold text-2xl">
-              Create New Task
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleCreateTask} className="space-y-4">
-              <Input
-                type="text"
-                name="title"
-                placeholder="Task Title"
-                value={newTask.title}
-                onChange={handleInputChange}
-                className="bg-gray-700 text-gray-100 border-none rounded-sm transition-all ease-out delay-75 focus:bg-gray-900 "
-                required
-              />
-              <Textarea
-                name="description"
-                placeholder="Task Description (optional)"
-                value={newTask.description}
-                onChange={handleInputChange}
-                className="bg-gray-700 text-gray-100 border-none rounded-sm transition-all ease-out delay-75 focus:bg-gray-900"
-              />
-              <Select
-                name="status"
-                value={newTask.status}
-                onValueChange={(value) => handleSelectChange("status", value)}
-              >
-                <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm focus:bg-gray-900">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="To Do">To Do</SelectItem>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select
-                name="priority"
-                value={newTask.priority}
-                onValueChange={(value) => handleSelectChange("priority", value)}
-              >
-                <SelectTrigger className="bg-gray-700 text-gray-100 border-none rounded-sm focus:bg-gray-900">
-                  <SelectValue placeholder="Priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Low">Low</SelectItem>
-                  <SelectItem value="Medium">Medium</SelectItem>
-                  <SelectItem value="High">High</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button type="submit" className="w-full">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Task
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
+        
         {/* Actual Kanban board */}
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
