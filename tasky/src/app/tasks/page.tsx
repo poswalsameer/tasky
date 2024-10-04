@@ -110,21 +110,21 @@ export default function TaskManager() {
         
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="secondary" className="text-[#3B235F] text-xs font-semibold">
+            <Button variant="secondary" className="text-[#3B235F] text-xs font-bold">
               Create New Task
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="w-[45rem] text-black border-none shadow-2xl" id="DialogBackground">
 
             <DialogHeader>
-              <DialogTitle>Create New Task</DialogTitle>
+              <DialogTitle className="text-xl text-[#211236]">Create New Task</DialogTitle>
             </DialogHeader>
 
             <form onSubmit={handleCreateTask} className="space-y-4">
               <div className="grid gap-4 py-4">
                 
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
+                    <Label htmlFor="name" className="text-right font-bold text-[#211236]">
                       Title
                     </Label>
                     <Input
@@ -133,14 +133,14 @@ export default function TaskManager() {
                       placeholder="Task Title"
                       value={newTask.title}
                       onChange={handleInputChange}
-                      className="w-64 rounded-sm transition-all ease-out delay-75"
+                      className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2 "
                       required
                     />
                   </div>
 
                   
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
                       Description
                     </Label>
                     <Textarea
@@ -148,12 +148,12 @@ export default function TaskManager() {
                       placeholder="Task Description (optional)"
                       value={newTask.description}
                       onChange={handleInputChange}
-                      className="w-64 rounded-sm transition-all ease-out delay-75 "
+                      className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2 "
                     />
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
                       Status
                     </Label>
                     <Select
@@ -163,7 +163,7 @@ export default function TaskManager() {
                         handleSelectChange("status", value)
                       }
                     >
-                      <SelectTrigger className="w-64 rounded-sm">
+                      <SelectTrigger className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -176,7 +176,7 @@ export default function TaskManager() {
 
                 
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
                       Priority
                     </Label>
                     <Select
@@ -186,7 +186,7 @@ export default function TaskManager() {
                         handleSelectChange("priority", value)
                       }
                     >
-                      <SelectTrigger className="w-64 rounded-sm">
+                      <SelectTrigger className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2">
                         <SelectValue placeholder="Priority" />
                       </SelectTrigger>
                       <SelectContent>
@@ -200,7 +200,7 @@ export default function TaskManager() {
               </div>
 
               <DialogFooter>
-                <Button type="submit">Create</Button>
+                <Button type="submit" className="bg-[#211236] font-medium transition-all ease-in delay-75 hover:bg-[#2f194e] ">Create</Button>
               </DialogFooter>
 
             </form>
@@ -235,7 +235,7 @@ export default function TaskManager() {
         {/* Existing tasks */}
         <Card className="bg-transparent border-none shadow-none">
           <CardHeader>
-            <CardTitle className="text-white font-semibold text-4xl">
+            <CardTitle className="text-[#2e1b4b] font-bold text-4xl">
               Your Tasks
             </CardTitle>
           </CardHeader>
@@ -245,16 +245,16 @@ export default function TaskManager() {
                 {tasks.map((task) => (
                   <li
                     key={task.id}
-                    className="bg-[#3B235F] bg-opacity-50 p-4 rounded-md shadow-lg transition-all ease-in delay-75 hover:cursor-pointer hover:translate-x-4"
+                    className="bg-[#3B235F] bg-opacity-50 p-4 rounded-md shadow-xl transition-all ease-in delay-75 hover:cursor-pointer hover:translate-x-4"
                   >
                     <div className="flex justify-between items-start">
-                      <div className="flex flex-col gap-y-2">
-                        <h3 className="text-white font-bold text-2xl">
+                      <div className="flex flex-col gap-y-1">
+                        <h3 className="text-white font-bold text-xl">
                           {task.title}
                         </h3>
 
                         {task.description && (
-                          <p className="text-base text-[#c49cff] mt-1">
+                          <p className="text-sm font-bold text-[#c49cff] mt-1">
                             {task.description}
                           </p>
                         )}

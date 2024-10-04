@@ -168,13 +168,13 @@ function Page() {
         <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
           {(provided) => (
             <Card
-              className="bg-[#3B235F] bg-opacity-60 border-none my-5 p-4 rounded-md shadow-md transition-all ease-in delay-75 hover:-translate-y-1"
+              className="bg-[#3B235F] bg-opacity-60 border-none my-4 p-4 rounded-md shadow-lg transition-all ease-in delay-75 hover:-translate-y-1"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-medium text-blue-400">
+                <h3 className="text-lg font-bold text-white">
                   {task.title}
                 </h3>
                 <div className="flex items-center space-x-2">
@@ -189,14 +189,14 @@ function Page() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDeleteTask(task.id)}
-                    className="h-8 w-8 text-blue-400 hover:bg-black hover:text-blue-400"
+                    className="h-8 w-8 text-white hover:bg-[#3B235F] hover:text-white"
                   >
                     <Trash2 className="h-4 w-4" />
                     <span className="sr-only">Delete task</span>
                   </Button>
                 </div>
               </div>
-              <p className="text-xs text-blue-200">{task.description}</p>
+              <p className="text-sm font-bold text-[#c49cff]">{task.description}</p>
             </Card>
           )}
         </Draggable>
@@ -209,27 +209,24 @@ function Page() {
     id="kanbanBoardPage"
     >
       <nav className="flex justify-between bg-[#3B235F] p-4">
-        {/* <div className="flex items-center justify-center">
-          <CheckCircle className="h-6 w-6 text-blue-400" />
-          <span className="ml-2 text-2xl font-bold">Tasky</span>
-        </div> */}
+        
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="secondary" className="text-[#3B235F] text-xs font-semibold">
+            <Button variant="secondary" className="text-[#3B235F] text-xs font-bold">
               Create New Task
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="w-[45rem] text-black border-none shadow-2xl" id="DialogBackground">
 
             <DialogHeader>
-              <DialogTitle>Create New Task</DialogTitle>
+              <DialogTitle className="text-xl text-[#211236]">Create New Task</DialogTitle>
             </DialogHeader>
 
             <form onSubmit={handleCreateTask} className="space-y-4">
               <div className="grid gap-4 py-4">
                 
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
+                    <Label htmlFor="name" className="text-right font-bold text-[#211236]">
                       Title
                     </Label>
                     <Input
@@ -238,14 +235,14 @@ function Page() {
                       placeholder="Task Title"
                       value={newTask.title}
                       onChange={handleInputChange}
-                      className="w-64 rounded-sm transition-all ease-out delay-75"
+                      className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2 "
                       required
                     />
                   </div>
 
                   
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
                       Description
                     </Label>
                     <Textarea
@@ -253,12 +250,12 @@ function Page() {
                       placeholder="Task Description (optional)"
                       value={newTask.description}
                       onChange={handleInputChange}
-                      className="w-64 rounded-sm transition-all ease-out delay-75 "
+                      className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2 "
                     />
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
                       Status
                     </Label>
                     <Select
@@ -268,7 +265,7 @@ function Page() {
                         handleSelectChange("status", value)
                       }
                     >
-                      <SelectTrigger className="w-64 rounded-sm">
+                      <SelectTrigger className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -281,7 +278,7 @@ function Page() {
 
                 
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
                       Priority
                     </Label>
                     <Select
@@ -291,7 +288,7 @@ function Page() {
                         handleSelectChange("priority", value)
                       }
                     >
-                      <SelectTrigger className="w-64 rounded-sm">
+                      <SelectTrigger className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2">
                         <SelectValue placeholder="Priority" />
                       </SelectTrigger>
                       <SelectContent>
@@ -305,7 +302,7 @@ function Page() {
               </div>
 
               <DialogFooter>
-                <Button type="submit">Create</Button>
+                <Button type="submit" className="bg-[#211236] font-medium transition-all ease-in delay-75 hover:bg-[#2f194e] ">Create</Button>
               </DialogFooter>
 
             </form>
@@ -343,7 +340,7 @@ function Page() {
             <Droppable droppableId="toDoTasks">
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <h2 className="text-xl font-bold mb-4">To Do</h2>
+                  <h2 className="text-2xl text-[#2e1b4b] font-bold mb-4">To Do</h2>
                   {renderTasks("To Do")}
                   {provided.placeholder}
                 </div>
@@ -354,7 +351,7 @@ function Page() {
             <Droppable droppableId="inProgressTasks">
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <h2 className="text-xl font-bold mb-4">In Progress</h2>
+                  <h2 className="text-2xl text-[#2e1b4b] font-bold mb-4">In Progress</h2>
                   {renderTasks("In Progress")}
                   {provided.placeholder}
                 </div>
@@ -365,7 +362,7 @@ function Page() {
             <Droppable droppableId="completedTasks">
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <h2 className="text-xl font-bold mb-4">Completed</h2>
+                  <h2 className="text-2xl text-[#2e1b4b] font-bold mb-4">Completed</h2>
                   {renderTasks("Completed")}
                   {provided.placeholder}
                 </div>
