@@ -7,6 +7,15 @@
 body {
   font-family: "Poppins", sans-serif;
   background: linear-gradient(to top right, #6A31CA, #7B21C9, #AC0FBE);
+  /* background-size: 100% 100vh; */
+  background-repeat: repeat; 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#footerSection{
+  /* background: linear-gradient(to top right, #6A31CA, #7B21C9, #AC0FBE); */
+  background-color: #6F2CCA;
 }
 
 #taskManagerPage{
