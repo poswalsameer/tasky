@@ -205,28 +205,78 @@ function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100"
+    <div className="
+      min-h-screen bg-gray-900 text-gray-100  
+      sm:min-h-screen sm:bg-gray-900 sm:text-gray-100
+      md:min-h-screen md:bg-gray-900 md:text-gray-100
+      lg:min-h-screen lg:bg-gray-900 lg:text-gray-100
+      xl:min-h-screen xl:bg-gray-900 xl:text-gray-100
+      2xl:min-h-screen 2xl:bg-gray-900 2xl:text-gray-100"
     id="kanbanBoardPage"
     >
-      <nav className="flex justify-between bg-[#3B235F] p-4">
+      <nav className="
+        flex justify-between bg-[#3B235F] p-4
+        sm:flex sm:justify-between sm:bg-[#3B235F] sm:p-4
+        md:flex md:justify-between md:bg-[#3B235F] md:p-4
+        lg:flex lg:justify-between lg:bg-[#3B235F] lg:p-4
+        xl:flex xl:justify-between xl:bg-[#3B235F] xl:p-4
+        2xl:flex 2xl:justify-between 2xl:bg-[#3B235F] 2xl:p-4">
         
-        <Dialog>
+      <Dialog>
           <DialogTrigger asChild>
-            <Button variant="secondary" className="text-[#3B235F] text-xs font-bold">
+            <Button variant="secondary" className="
+              text-[#3B235F] text-xs font-bold
+              sm:text-[#3B235F] sm:text-xs sm:font-bold
+              md:text-[#3B235F] md:text-xs md:font-bold
+              lg:text-[#3B235F] lg:text-xs lg:font-bold
+              xl:text-[#3B235F] xl:text-xs xl:font-bold
+              2xl:text-[#3B235F] 2xl:text-xs 2xl:font-bold">
               Create New Task
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[45rem] text-black border-none shadow-2xl" id="DialogBackground">
+          <DialogContent className="
+            w-[21rem] text-black border-none shadow-2xl
+            sm:w-[40rem] sm:text-black sm:border-none sm:shadow-2xl
+            md:w-[42rem] md:text-black md:border-none md:shadow-2xl
+            lg:w-[45rem] lg:text-black lg:border-none lg:shadow-2xl
+            xl:w-[45rem] xl:text-black xl:border-none xl:shadow-2xl
+            2xl:w-[45rem] 2xl:text-black 2xl:border-none 2xl:shadow-2xl" id="DialogBackground">
 
             <DialogHeader>
-              <DialogTitle className="text-xl text-[#211236]">Create New Task</DialogTitle>
+              <DialogTitle className="
+                text-lg text-[#211236]
+                sm:text-xl sm:text-[#211236]
+                md:text-xl md:text-[#211236]
+                lg:text-xl lg:text-[#211236]
+                xl:text-xl xl:text-[#211236]
+                2xl:text-xl 2xl:text-[#211236]">
+                  Create New Task
+                </DialogTitle>
             </DialogHeader>
 
-            <form onSubmit={handleCreateTask} className="space-y-4">
-              <div className="grid gap-4 py-4">
+            <form onSubmit={handleCreateTask} className="space-y-4 sm:space-y-4 md:space-y-4 lg:space-y-4 xl:space-y-4 2xl:space-y-4">
+              <div className="
+                grid gap-4 py-4
+                sm:grid sm:gap-4 sm:py-4
+                md:grid md:gap-4 md:py-4
+                lg:grid lg:gap-4 lg:py-4
+                xl:grid xl:gap-4 xl:py-4
+                2xl:grid 2xl:gap-4 2xl:py-4">
                 
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right font-bold text-[#211236]">
+                  <div className="
+                    grid grid-cols-4 items-center gap-10
+                    sm:grid sm:grid-cols-4 sm:items-center sm:gap-4
+                    md:grid md:grid-cols-4 md:items-center md:gap-4
+                    lg:grid lg:grid-cols-4 lg:items-center lg:gap-4
+                    xl:grid xl:grid-cols-4 xl:items-center xl:gap-4
+                    2xl:grid 2xl:grid-cols-4 2xl:items-center 2xl:gap-4">
+                    <Label htmlFor="name" className="
+                      text-right font-bold text-[#211236]
+                      sm:text-right sm:font-bold sm:text-[#211236]
+                      md:text-right md:font-bold md:text-[#211236]
+                      lg:text-right lg:font-bold lg:text-[#211236]
+                      xl:text-right xl:font-bold xl:text-[#211236]
+                      2xl:text-right 2xl:font-bold 2xl:text-[#211236]">
                       Title
                     </Label>
                     <Input
@@ -235,14 +285,32 @@ function Page() {
                       placeholder="Task Title"
                       value={newTask.title}
                       onChange={handleInputChange}
-                      className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2 "
+                      className="
+                      w-48 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2
+                      sm:w-80 sm:font-bold sm:placeholder:text-[#211236] sm:border-2 sm:border-[#211236] sm:rounded-sm sm:transition-all sm:ease-out sm:delay-75 sm:focus:border-2 sm:focus:translate-x-2
+                      md:w-80 md:font-bold md:placeholder:text-[#211236] md:border-2 md:border-[#211236] md:rounded-sm md:transition-all md:ease-out md:delay-75 md:focus:border-2 md:focus:translate-x-2
+                      lg:w-80 lg:font-bold lg:placeholder:text-[#211236] lg:border-2 lg:border-[#211236] lg:rounded-sm lg:transition-all lg:ease-out lg:delay-75 lg:focus:border-2 lg:focus:translate-x-2
+                      xl:w-80 xl:font-bold xl:placeholder:text-[#211236] xl:border-2 xl:border-[#211236] xl:rounded-sm xl:transition-all xl:ease-out xl:delay-75 xl:focus:border-2 xl:focus:translate-x-2 
+                      2xl:w-80 2xl:font-bold 2xl:placeholder:text-[#211236] 2xl:border-2 2xl:border-[#211236] 2xl:rounded-sm 2xl:transition-all 2xl:ease-out 2xl:delay-75 2xl:focus:border-2 2xl:focus:translate-x-2 "
                       required
                     />
                   </div>
 
                   
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
+                  <div className="
+                    grid grid-cols-4 items-center gap-10
+                    sm:grid sm:grid-cols-4 sm:items-center sm:gap-4
+                    md:grid md:grid-cols-4 md:items-center md:gap-4
+                    lg:grid lg:grid-cols-4 lg:items-center lg:gap-4
+                    xl:grid xl:grid-cols-4 xl:items-center xl:gap-4
+                    2xl:grid 2xl:grid-cols-4 2xl:items-center 2xl:gap-4">
+                    <Label htmlFor="username" className="
+                      text-right font-bold text-[#211236]
+                      sm:text-right sm:font-bold sm:text-[#211236]
+                      md:text-right md:font-bold md:text-[#211236]
+                      lg:text-right lg:font-bold lg:text-[#211236]
+                      xl:text-right xl:font-bold xl:text-[#211236]
+                      2xl:text-right 2xl:font-bold 2xl:text-[#211236]">
                       Description
                     </Label>
                     <Textarea
@@ -250,12 +318,30 @@ function Page() {
                       placeholder="Task Description (optional)"
                       value={newTask.description}
                       onChange={handleInputChange}
-                      className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2 "
+                      className="
+                      w-48 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm transition-all ease-out delay-75 focus:border-2 focus:translate-x-2
+                      sm:w-80 sm:font-bold sm:placeholder:text-[#211236] sm:border-2 sm:border-[#211236] sm:rounded-sm sm:transition-all sm:ease-out sm:delay-75 sm:focus:border-2 sm:focus:translate-x-2
+                      md:w-80 md:font-bold md:placeholder:text-[#211236] md:border-2 md:border-[#211236] md:rounded-sm md:transition-all md:ease-out md:delay-75 md:focus:border-2 md:focus:translate-x-2
+                      lg:w-80 lg:font-bold lg:placeholder:text-[#211236] lg:border-2 lg:border-[#211236] lg:rounded-sm lg:transition-all lg:ease-out lg:delay-75 lg:focus:border-2 lg:focus:translate-x-2
+                      xl:w-80 xl:font-bold xl:placeholder:text-[#211236] xl:border-2 xl:border-[#211236] xl:rounded-sm xl:transition-all xl:ease-out xl:delay-75 xl:focus:border-2 xl:focus:translate-x-2
+                      2xl:w-80 2xl:font-bold 2xl:placeholder:text-[#211236] 2xl:border-2 2xl:border-[#211236] 2xl:rounded-sm 2xl:transition-all 2xl:ease-out 2xl:delay-75 2xl:focus:border-2 2xl:focus:translate-x-2 "
                     />
                   </div>
 
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
+                  <div className="
+                    grid grid-cols-4 items-center gap-10
+                    sm:grid sm:grid-cols-4 sm:items-center sm:gap-4
+                    md:grid md:grid-cols-4 md:items-center md:gap-4
+                    lg:grid lg:grid-cols-4 lg:items-center lg:gap-4
+                    xl:grid xl:grid-cols-4 xl:items-center xl:gap-4
+                    2xl:grid 2xl:grid-cols-4 2xl:items-center 2xl:gap-4">
+                    <Label htmlFor="username" className="
+                      text-right font-bold text-[#211236]
+                      sm:text-right sm:font-bold sm:text-[#211236]
+                      md:text-right md:font-bold md:text-[#211236]
+                      lg:text-right lg:font-bold lg:text-[#211236]
+                      xl:text-right xl:font-bold xl:text-[#211236]
+                      2xl:text-right 2xl:font-bold 2xl:text-[#211236]">
                       Status
                     </Label>
                     <Select
@@ -265,7 +351,13 @@ function Page() {
                         handleSelectChange("status", value)
                       }
                     >
-                      <SelectTrigger className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2">
+                      <SelectTrigger className="
+                        w-48 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2
+                        sm:w-80 sm:font-bold sm:placeholder:text-[#211236] sm:border-2 sm:border-[#211236] sm:rounded-sm sm:focus:border-2
+                        md:w-80 md:font-bold md:placeholder:text-[#211236] md:border-2 md:border-[#211236] md:rounded-sm md:focus:border-2
+                        lg:w-80 lg:font-bold lg:placeholder:text-[#211236] lg:border-2 lg:border-[#211236] lg:rounded-sm lg:focus:border-2
+                        xl:w-80 xl:font-bold xl:placeholder:text-[#211236] xl:border-2 xl:border-[#211236] xl:rounded-sm xl:focus:border-2
+                        2xl:w-80 2xl:font-bold 2xl:placeholder:text-[#211236] 2xl:border-2 2xl:border-[#211236] 2xl:rounded-sm 2xl:focus:border-2">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -277,8 +369,20 @@ function Page() {
                   </div>
 
                 
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right font-bold text-[#211236]">
+                  <div className="
+                    grid grid-cols-4 items-center gap-10
+                    sm:grid sm:grid-cols-4 sm:items-center sm:gap-4
+                    md:grid md:grid-cols-4 md:items-center md:gap-4
+                    lg:grid lg:grid-cols-4 lg:items-center lg:gap-4
+                    xl:grid xl:grid-cols-4 xl:items-center xl:gap-4
+                    2xl:grid 2xl:grid-cols-4 2xl:items-center 2xl:gap-4">
+                    <Label htmlFor="username" className="
+                      text-right font-bold text-[#211236]
+                      sm:text-right sm:font-bold sm:text-[#211236]
+                      md:text-right md:font-bold md:text-[#211236]
+                      lg:text-right lg:font-bold lg:text-[#211236]
+                      xl:text-right xl:font-bold xl:text-[#211236]
+                      2xl:text-right 2xl:font-bold 2xl:text-[#211236]">
                       Priority
                     </Label>
                     <Select
@@ -288,7 +392,13 @@ function Page() {
                         handleSelectChange("priority", value)
                       }
                     >
-                      <SelectTrigger className="w-80 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2">
+                      <SelectTrigger className="
+                        w-48 font-bold placeholder:text-[#211236] border-2 border-[#211236] rounded-sm focus:border-2
+                        sm:w-80 sm:font-bold sm:placeholder:text-[#211236] sm:border-2 sm:border-[#211236] sm:rounded-sm sm:focus:border-2
+                        md:w-80 md:font-bold md:placeholder:text-[#211236] md:border-2 md:border-[#211236] md:rounded-sm md:focus:border-2
+                        lg:w-80 lg:font-bold lg:placeholder:text-[#211236] lg:border-2 lg:border-[#211236] lg:rounded-sm lg:focus:border-2
+                        xl:w-80 xl:font-bold xl:placeholder:text-[#211236] xl:border-2 xl:border-[#211236] xl:rounded-sm xl:focus:border-2
+                        2xl:w-80 2xl:font-bold 2xl:placeholder:text-[#211236] 2xl:border-2 2xl:border-[#211236] 2xl:rounded-sm 2xl:focus:border-2">
                         <SelectValue placeholder="Priority" />
                       </SelectTrigger>
                       <SelectContent>
@@ -302,36 +412,71 @@ function Page() {
               </div>
 
               <DialogFooter>
-                <Button type="submit" className="bg-[#211236] font-medium transition-all ease-in delay-75 hover:bg-[#2f194e] ">Create</Button>
+                <Button type="submit" className="
+                  bg-[#211236] font-medium transition-all ease-in delay-75 hover:bg-[#2f194e]
+                  sm:bg-[#211236] sm:font-medium sm:transition-all sm:ease-in sm:delay-75 sm:hover:bg-[#2f194e]
+                  md:bg-[#211236] md:font-medium md:transition-all md:ease-in md:delay-75 md:hover:bg-[#2f194e]
+                  lg:bg-[#211236] lg:font-medium lg:transition-all lg:ease-in lg:delay-75 lg:hover:bg-[#2f194e]
+                  xl:bg-[#211236] xl:font-medium xl:transition-all xl:ease-in xl:delay-75 xl:hover:bg-[#2f194e]
+                  2xl:bg-[#211236] 2xl:font-medium 2xl:transition-all 2xl:ease-in 2xl:delay-75 2xl:hover:bg-[#2f194e] ">Create</Button>
               </DialogFooter>
 
             </form>
 
           </DialogContent>
-        </Dialog>
+      </Dialog>
 
-        <div className="container mx-auto flex gap-x-4 justify-end">
+        <div className="
+          container mx-auto flex gap-x-4 justify-end
+          sm:container sm:mx-auto sm:flex sm:gap-x-4 sm:justify-end
+          md:container md:mx-auto md:flex md:gap-x-4 md:justify-end
+          lg:container lg:mx-auto lg:flex lg:gap-x-4 lg:justify-end
+          xl:container xl:mx-auto xl:flex xl:gap-x-4 xl:justify-end
+          2xl:container 2xl:mx-auto 2xl:flex 2xl:gap-x-4 2xl:justify-end">
           <Button
             variant="secondary"
-            className="rounded-sm text-xs font-bold"
+            className="
+            rounded-sm text-xs font-bold 
+            sm:rounded-sm sm:text-xs sm:font-bold 
+            md:rounded-sm md:text-xs md:font-bold 
+            lg:rounded-sm lg:text-xs lg:font-bold 
+            xl:rounded-sm xl:text-xs xl:font-bold  
+            2xl:rounded-sm 2xl:text-xs 2xl:font-bold"
             onClick={routeToTaskPage}
           >
-            <ClipboardCheck className="mr-2 h-4 w-4" />
+            <ClipboardCheck className="
+              mr-2 h-4 w-4
+              sm:mr-2 sm:h-4 sm:w-4
+              md:mr-2 md:h-4 md:w-4
+              lg:mr-2 lg:h-4 lg:w-4
+              xl:mr-2 xl:h-4 xl:w-4
+              2xl:mr-2 2xl:h-4 2xl:w-4" />
             List
           </Button>
 
           <Button
             variant="destructive"
-            className="rounded-sm font-semibold"
+            className="
+            rounded-sm font-semibold
+            sm:rounded-sm sm:font-semibold
+            md:rounded-sm md:font-semibold
+            lg:rounded-sm lg:font-semibold
+            xl:rounded-sm xl:font-semibold
+            2xl:rounded-sm 2xl:font-semibold"
             onClick={handleLogout}
           >
-            <LogOut className=" h-4 w-4" />
+            <LogOut className=" 
+              h-4 w-4
+              sm:h-4 sm:w-4
+              md:h-4 md:w-4
+              lg:h-4 lg:w-4
+              xl:h-4 xl:w-4
+              2xl:h-4 2xl:w-4" />
           </Button>
         </div>
       </nav>
 
       <main className="container mt-10 mx-auto p-4">
-        {/* Create task component */}
         
         {/* Actual Kanban board */}
         <DragDropContext onDragEnd={onDragEnd}>
