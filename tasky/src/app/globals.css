@@ -4,13 +4,25 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+html {
+  margin: 0;
+  padding: 0;
+  /* height: 100%;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(to top right, #6A31CA, #7B21C9, #AC0FBE);
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-x: hidden; */
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background: linear-gradient(to top right, #6A31CA, #7B21C9, #AC0FBE);
   /* background-size: 100% 100vh; */
-  background-repeat: repeat; 
-  overflow-y: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
   overflow-x: hidden;
+  /* min-height: 100%; */
 }
 
 #footerSection{
